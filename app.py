@@ -7,6 +7,7 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import requests
 from sqlitedict import SqliteDict
+import pickle
 import math
 import re
 import json
@@ -28,8 +29,11 @@ print("Try: http://127.0.0.1:5000/api/v1/clickstream?title=Frida_Kahlo")
 #CORS(app, resources={'*': {'origins': '*'}})
 CORS(app)
 
-db_sources = SqliteDict('sources.sqlite',flag="r")
-db_targets = SqliteDict('targets.sqlite',flag="r")
+# db_sources = SqliteDict('sources.sqlite',flag="r")
+# db_targets = SqliteDict('targets.sqlite',flag="r")
+
+db_sources = pickle.load(open("sources.pkl", "rb"))
+db_targets = pickle.load(open("targets.pkl", "rb"))
 
 @app.route('/api/v1/clickstream', methods=['GET'])
 def get_clicks():
